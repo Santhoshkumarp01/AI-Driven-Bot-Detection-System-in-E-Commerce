@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TouchGuard Admin Dashboard</title>
+    <link rel="stylesheet" href="/static/css/admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        
+        .loading-spinner {
+            text-align: center;
+            color: white;
+        }
+        
+        .loading-spinner i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .notification {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            padding: 16px 20px;
+            min-width: 300px;
+            transform: translateX(400px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        
+        .notification.success {
+            border-left: 4px solid var(--success-color);
+        }
+        
+        .notification.error {
+            border-left: 4px solid var(--danger-color);
+        }
+        
+        .notification.warning {
+            border-left: 4px solid var(--warning-color);
+        }
+        
+        .notification.info {
+            border-left: 4px solid var(--info-color);
+        }
+        
+        .notification-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .notification-content i {
+            font-size: 1.2rem;
+        }
+        
+        .notification.success .notification-content i {
+            color: var(--success-color);
+        }
+        
+        .notification.error .notification-content i {
+            color: var(--danger-color);
+        }
+        
+        .notification.warning .notification-content i {
+            color: var(--warning-color);
+        }
+        
+        .notification.info .notification-content i {
+            color: var(--info-color);
+        }
+        
+        .session-details-grid {
+            display: grid;
+            gap: 2rem;
+        }
+        
+        .detail-section {
+            background: var(--light-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        
+        .detail-section h4 {
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+            font-weight: 600;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+        
+        .detail-label {
+            font-weight: 500;
+            color: var(--text-light);
+        }
+        
+        .detail-value {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        
+        .refresh-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+        
+        .refresh-indicator i {
+            animation: spin 2s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo-section">
+                        <i class="fas fa-shield-alt"></i>
+                        <h1>TouchGuard Admin</h1>
+                        <span class="version">v1.0</span>
+                    </div>
+                    <nav class="admin-nav">
+                        <a href="/" class="nav-link">
+                            <i class="fas fa-home"></i>
+                            Back to Store
+                        </a>
+                        <a href="#dashboard" class="nav-link active">
+                            <i class="fas fa-tachometer-alt"></i>
+                            Live Dashboard
+                        </a>
+                        <button class="btn btn-primary refresh-btn" onclick="refreshSessions()">
+                            <i class="fas fa-sync-alt"></i>
+                            Manual Refresh
+                        </button>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <main class="admin-main">
+            <div class="container">
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card human-card">
+                        <div class="stat-icon human">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="human-count">{{ stats.human_sessions }}</h3>
+                            <p>Human Sessions</p>
+                            <span class="stat-trend positive">
+                                <i class="fas fa-arrow-up"></i> Real-time tracking
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card bot-card">
+                        <div class="stat-icon bot">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="bot-count">{{ stats.bot_sessions }}</h3>
+                            <p>Bot Sessions</p>
+                            <span class="stat-trend negative">
+                                <i class="fas fa-shield-alt"></i> Blocked threats
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card total-card">
+                        <div class="stat-icon total">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="total-count">{{ stats.total_sessions }}</h3>
+                            <p>Total Sessions</p>
+                            <span class="stat-trend neutral">
+                                <i class="fas fa-clock"></i> Live monitoring
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card accuracy-card">
+                        <div class="stat-icon accuracy">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>92.3%</h3>
+                            <p>Detection Accuracy</p>
+                            <span class="stat-trend positive">
+                                <i class="fas fa-check"></i> High precision
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Sessions Table -->
+                <div class="sessions-section">
+                    <div class="section-header">
+                        <h2>🔴 Live Session Monitoring</h2>
+                        <div class="section-controls">
+                            <div class="auto-refresh">
+                                <input type="checkbox" id="auto-refresh" checked>
+                                <label for="auto-refresh">Auto-refresh (10s)</label>
+                            </div>
+                            <div class="refresh-indicator">
+                                <i class="fas fa-sync-alt"></i>
+                                <span>Next refresh: <span id="refresh-countdown">10</span>s</span>
+                            </div>
+                            <button class="btn btn-secondary" onclick="exportData()">
+                                <i class="fas fa-download"></i>
+                                Export CSV
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="sessions-table">
+                            <thead>
+                                <tr>
+                                    <th>Session ID</th>
+                                    <th>Classification</th>
+                                    <th>Confidence</th>
+                                    <th>Movements</th>
+                                    <th>Status</th>
+                                    <th>Last Activity</th>
+                                    <th>IP Address</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sessions-tbody">
+                                {% for session in stats.sessions %}
+                                <tr class="session-row {{ 'bot-session' if session[2] == 'Bot' else 'human-session' }}" data-session-id="{{ session[0] }}">
+                                    <td class="session-id">
+                                        <span class="id-text">{{ session[0][:16] }}...</span>
+                                        <button class="copy-btn" onclick="copyToClipboard('{{ session[0] }}')" title="Copy Session ID">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <span class="user-type {{ session[2].lower() }}">
+                                            {% if session[2] == 'Human' %}
+                                                <i class="fas fa-user"></i>
+                                            {% else %}
+                                                <i class="fas fa-robot"></i>
+                                            {% endif %}
+                                            {{ session[2] }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="confidence-display">
+                                            <div class="confidence-bar">
+                                                <div class="confidence-fill" style="width: {{ session[3] or 0 }}%"></div>
+                                            </div>
+                                            <span class="confidence-text">{{ "%.1f"|format(session[3] or 0) }}%</span>
+                                        </div>
+                                    </td>
+                                    <td class="movement-count">{{ session[5] or 0 }}</td>
+                                    <td>
+                                        <span class="status-badge {{ 'active' if session[4] == 'active' else 'inactive' }}">
+                                            {% if session[4] == 'active' %}
+                                                <i class="fas fa-circle"></i> Active
+                                            {% else %}
+                                                <i class="far fa-circle"></i> Inactive
+                                            {% endif %}
+                                        </span>
+                                    </td>
+                                    <td class="timestamp">
+                                        <span class="time-ago" data-time="{{ session[6] }}">
+                                            {{ session[1] }}
+                                        </span>
+                                    </td>
+                                    <td class="ip-address">
+                                        <code>{{ session[7] or 'N/A' }}</code>
+                                    </td>
+                                    <td class="actions">
+                                        <button class="btn btn-sm btn-info view-session-btn" onclick="viewSession('{{ session[0] }}')" title="View Details">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-warning block-session-btn" onclick="blockSession('{{ session[0] }}')" title="Block Session">
+                                            <i class="fas fa-ban"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-danger delete-session-btn" onclick="deleteSession('{{ session[0] }}')" title="Delete Session">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                
+                                {% if not stats.sessions %}
+                                <tr>
+                                    <td colspan="8" style="text-align: center; padding: 3rem; color: var(--text-light);">
+                                        <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 1rem; display: block; opacity: 0.3;"></i>
+                                        <h3 style="margin-bottom: 0.5rem;">No Sessions Found</h3>
+                                        <p>Start browsing the e-commerce site to see live sessions appear here</p>
+                                    </td>
+                                </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    {% if stats.sessions %}
+                    <div class="table-footer">
+                        <div class="table-info">
+                            <span>Showing {{ stats.sessions|length }} of {{ stats.total_sessions }} sessions</span>
+                        </div>
+                        <div class="table-actions">
+                            <span class="last-updated">Last updated: <span id="last-updated">{{ stats.last_updated or 'Just now' }}</span></span>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Live Activity Feed -->
+                <div class="activity-feed-section">
+                    <div class="section-header">
+                        <h2>🔴 Live Activity Feed</h2>
+                        <div class="activity-controls">
+                            <button class="btn btn-sm btn-secondary" onclick="clearActivityFeed()">
+                                <i class="fas fa-trash"></i>
+                                Clear Feed
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="activity-feed" id="activity-feed">
+                        <div class="activity-item" data-time="{{ stats.last_activity_time or '' }}">
+                            <div class="activity-icon">
+                                <i class="fas fa-power-off"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">TouchGuard Admin Dashboard Started</div>
+                                <div class="activity-time">{{ stats.startup_time or 'Just now' }}</div>
+                            </div>
+                        </div>
+                        
+                        {% for session in stats.sessions[:5] %}
+                        <div class="activity-item">
+                            <div class="activity-icon {{ 'bot' if session[2] == 'Bot' else 'human' }}">
+                                {% if session[2] == 'Human' %}
+                                    <i class="fas fa-user"></i>
+                                {% else %}
+                                    <i class="fas fa-robot"></i>
+                                {% endif %}
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">
+                                    {{ session[2] }} session detected
+                                    <span class="confidence-badge">{{ "%.1f"|format(session[3] or 0) }}%</span>
+                                </div>
+                                <div class="activity-details">
+                                    Session: {{ session[0][:16] }}... | IP: {{ session[7] or 'N/A' }}
+                                </div>
+                                <div class="activity-time">{{ session[1] }}</div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- System Status -->
+                <div class="system-status-section">
+                    <div class="section-header">
+                        <h2>🖥️ System Status</h2>
+                    </div>
+                    
+                    <div class="status-grid">
+                        <div class="status-card">
+                            <div class="status-indicator online"></div>
+                            <div class="status-content">
+                                <h4>TouchGuard AI Model</h4>
+                                <p>Online and processing</p>
+                            </div>
+                        </div>
+                        
+                        <div class="status-card">
+                            <div class="status-indicator online"></div>
+                            <div class="status-content">
+                                <h4>Mouse Tracking</h4>
+                                <p>Active monitoring</p>
+                            </div>
+                        </div>
+                        
+                        <div class="status-card">
+                            <div class="status-indicator online"></div>
+                            <div class="status-content">
+                                <h4>Database</h4>
+                                <p>Connected</p>
+                            </div>
+                        </div>
+                        
+                        <div class="status-card">
+                            <div class="status-indicator online"></div>
+                            <div class="status-content">
+                                <h4>Real-time Updates</h4>
+                                <p>10s refresh rate</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="admin-footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-left">
+                        <p>&copy; 2025 TouchGuard Bot Detection System. All rights reserved.</p>
+                    </div>
+                    <div class="footer-right">
+                        <span class="system-info">
+                            System uptime: <span id="system-uptime">{{ stats.uptime or '0h 0m' }}</span>
+                        </span>
+                        <span class="divider">|</span>
+                        <span class="version-info">
+                            Version 1.0.0
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="/static/js/admin.js"></script>
+    
+    <script>
+        // Refresh countdown timer
+        let refreshCountdown = 10;
+        setInterval(() => {
+            refreshCountdown--;
+            const countdownElement = document.getElementById('refresh-countdown');
+            if (countdownElement) {
+                countdownElement.textContent = refreshCountdown;
+            }
+            
+            if (refreshCountdown <= 0) {
+                refreshCountdown = 10;
+            }
+        }, 1000);
+        
+        // Update last updated time
+        setInterval(() => {
+            const lastUpdatedElement = document.getElementById('last-updated');
+            if (lastUpdatedElement) {
+                lastUpdatedElement.textContent = new Date().toLocaleTimeString();
+            }
+        }, 1000);
+        
+        // Clear activity feed function
+        window.clearActivityFeed = () => {
+            const activityFeed = document.getElementById('activity-feed');
+            if (activityFeed) {
+                activityFeed.innerHTML = `
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-broom"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Activity feed cleared</div>
+                            <div class="activity-time">Just now</div>
+                        </div>
+                    </div>
+                `;
+            }
+        };
+    </script>
+</body>
+</html>

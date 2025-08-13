@@ -1,0 +1,5 @@
+Main Site: http://localhost:8000
+
+Admin Dashboard: http://localhost:8000/admin
+
+fastapi dev app.py

@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TouchGuard E-commerce Store - AI Bot Detection</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>TouchGuard Store</span>
+                    <small class="ai-badge">AI Protected</small>
+                </div>
+                
+                <div class="search-bar">
+                    <input type="text" placeholder="Search products..." class="search-input">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+                
+                <div class="header-actions">
+                    <div class="detection-status" id="detection-status">
+                        <div class="status-dot" id="status-dot"></div>
+                        <span class="status-text" id="status-text">Analyzing...</span>
+                        <span class="confidence" id="confidence-display">0%</span>
+                    </div>
+                    
+                    <button class="cart-btn" id="cart-btn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-badge" id="cart-count">0</span>
+                    </button>
+                    
+                    <a href="/admin" class="admin-btn">Admin Dashboard</a>
+                </div>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="#home" class="nav-item active">Home</a>
+                <a href="#electronics" class="nav-item">Electronics</a>
+                <a href="#audio" class="nav-item">Audio</a>
+                <a href="#wearables" class="nav-item">Wearables</a>
+                <a href="#accessories" class="nav-item">Accessories</a>
+                <a href="#deals" class="nav-item">Deals</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>AI-Protected Shopping Experience</h1>
+                <p>Shop with confidence knowing our advanced bot detection technology keeps you safe</p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <strong>92%</strong>
+                        <span>Detection Accuracy</span>
+                    </div>
+                    <div class="stat">
+                        <strong>0%</strong>
+                        <span>False Positives</span>
+                    </div>
+                    <div class="stat">
+                        <strong>2ms</strong>
+                        <span>Response Time</span>
+                    </div>
+                    <div class="stat">
+                        <strong>10K+</strong>
+                        <span>Protected Sessions</span>
+                    </div>
+                </div>
+                <button class="cta-btn">Shop Now Safely</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories">
+        <div class="container">
+            <h2 class="section-title">Shop by Category</h2>
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <h3>Electronics</h3>
+                    <p>Laptops, Phones, Tablets</p>
+                    <span class="product-count">250+ Products</span>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-headphones"></i>
+                    </div>
+                    <h3>Audio</h3>
+                    <p>Headphones, Speakers</p>
+                    <span class="product-count">180+ Products</span>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-watch"></i>
+                    </div>
+                    <h3>Wearables</h3>
+                    <p>Smartwatches, Fitness</p>
+                    <span class="product-count">120+ Products</span>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-keyboard"></i>
+                    </div>
+                    <h3>Accessories</h3>
+                    <p>Keyboards, Mice, Cables</p>
+                    <span class="product-count">350+ Products</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products -->
+    <section class="products">
+        <div class="container">
+            <h2 class="section-title">Featured Products</h2>
+            <div class="products-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-laptop product-icon"></i>
+                        <div class="product-badge featured">Featured</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-brand">Gaming Pro</div>
+                        <h3>Gaming Laptop Pro RTX 4060</h3>
+                        <p class="product-desc">High-performance gaming laptop with RTX 4060, 16GB RAM, 512GB SSD</p>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-text">(4.8) 234 reviews</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$1,299.99</span>
+                            <span class="old-price">$1,499.99</span>
+                            <span class="discount">13% OFF</span>
+                        </div>
+                        <button class="add-to-cart" data-product-id="laptop" data-name="Gaming Laptop Pro RTX 4060" data-price="1299.99">
+                            <i class="fas fa-cart-plus"></i>
+                            Add to Cart
+                        </button>
+                        <div class="product-availability">
+                            <i class="fas fa-check-circle"></i>
+                            <span>In Stock - Ships in 24 hours</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-headphones product-icon"></i>
+                        <div class="product-badge sale">Sale</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-brand">AudioMax</div>
+                        <h3>Wireless Noise-Canceling Headphones</h3>
+                        <p class="product-desc">Premium wireless headphones with active noise cancellation</p>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-text">(4.9) 1,023 reviews</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$249.99</span>
+                            <span class="old-price">$299.99</span>
+                            <span class="discount">17% OFF</span>
+                        </div>
+                        <button class="add-to-cart" data-product-id="headphones" data-name="Wireless Noise-Canceling Headphones" data-price="249.99">
+                            <i class="fas fa-cart-plus"></i>
+                            Add to Cart
+                        </button>
+                        <div class="product-availability">
+                            <i class="fas fa-check-circle"></i>
+                            <span>In Stock - Free shipping</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-mobile-alt product-icon"></i>
+                        <div class="product-badge new">New</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-brand">TechPhone</div>
+                        <h3>Smartphone Pro Max 256GB</h3>
+                        <p class="product-desc">Latest flagship smartphone with AI camera and 5G</p>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="rating-text">(4.7) 412 reviews</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$899.99</span>
+                        </div>
+                        <button class="add-to-cart" data-product-id="smartphone" data-name="Smartphone Pro Max 256GB" data-price="899.99">
+                            <i class="fas fa-cart-plus"></i>
+                            Add to Cart
+                        </button>
+                        <div class="product-availability">
+                            <i class="fas fa-clock"></i>
+                            <span>Pre-order - Ships in 3-5 days</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-watch product-icon"></i>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-brand">WearTech</div>
+                        <h3>Smart Watch Series X</h3>
+                        <p class="product-desc">Advanced fitness tracking smartwatch with heart rate monitor</p>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="rating-text">(4.5) 567 reviews</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$399.99</span>
+                        </div>
+                        <button class="add-to-cart" data-product-id="smartwatch" data-name="Smart Watch Series X" data-price="399.99">
+                            <i class="fas fa-cart-plus"></i>
+                            Add to Cart
+                        </button>
+                        <div class="product-availability">
+                            <i class="fas fa-check-circle"></i>
+                            <span>In Stock - Same day delivery</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-keyboard product-icon"></i>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-brand">TypeMaster</div>
+                        <h3>Mechanical Keyboard RGB</h3>
+                        <p class="product-desc">Professional mechanical keyboard with RGB backlighting</p>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="rating-text">(4.4) 321 reviews</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$159.99</span>
+                        </div>
+                        <button class="add-to-cart" data-product-id="keyboard" data-name="Mechanical Keyboard RGB" data-price="159.99">
+                            <i class="fas fa-cart-plus"></i>
+                            Add to Cart
+                        </button>
+                        <div class="product-availability">
+                            <i class="fas fa-check-circle"></i>
+                            <span>In Stock - 2-day shipping</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-volume-up product-icon"></i>
+                        <div class="product-badge trending">Trending</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-brand">SoundWave</div>
+                        <h3>Bluetooth Speaker 360°</h3>
+                        <p class="product-desc">Waterproof portable speaker with 360-degree sound</p>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="rating-text">(4.6) 189 reviews</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$199.99</span>
+                            <span class="old-price">$249.99</span>
+                            <span class="discount">20% OFF</span>
+                        </div>
+                        <button class="add-to-cart" data-product-id="speaker" data-name="Bluetooth Speaker 360°" data-price="199.99">
+                            <i class="fas fa-cart-plus"></i>
+                            Add to Cart
+                        </button>
+                        <div class="product-availability">
+                            <i class="fas fa-check-circle"></i>
+                            <span>In Stock - Express delivery</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 7 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-gamepad product-icon"></i>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-brand">GamePro</div>
+                        <h3>Wireless Gaming Controller</h3>
+                        <p class="product-desc">Professional wireless controller with haptic feedback</p>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-text">(4.7) 892 reviews</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$79.99</span>
+                            <span class="old-price">$99.99</span>
+                            <span class="discount">20% OFF</span>
+                        </div>
+                        <button class="add-to-cart" data-product-id="controller" data-name="Wireless Gaming Controller" data-price="79.99">
+                            <i class="fas fa-cart-plus"></i>
+                            Add to Cart
+                        </button>
+                        <div class="product-availability">
+                            <i class="fas fa-check-circle"></i>
+                            <span>In Stock - Ships today</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 8 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-camera product-icon"></i>
+                        <div class="product-badge new">New</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-brand">PhotoPro</div>
+                        <h3>4K Action Camera</h3>
+                        <p class="product-desc">Ultra-compact 4K action camera with image stabilization</p>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="rating-text">(4.3) 156 reviews</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$299.99</span>
+                        </div>
+                        <button class="add-to-cart" data-product-id="camera" data-name="4K Action Camera" data-price="299.99">
+                            <i class="fas fa-cart-plus"></i>
+                            Add to Cart
+                        </button>
+                        <div class="product-availability">
+                            <i class="fas fa-check-circle"></i>
+                            <span>In Stock - Free shipping</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h3>Stay Updated with TouchGuard</h3>
+                <p>Get exclusive deals, product launches, and security updates</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter your email address" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>TouchGuard Store</span>
+                    </div>
+                    <p>AI-powered bot protection for secure e-commerce</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#products">Products</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Security</h4>
+                    <div class="security-badges">
+                        <div class="security-badge">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>AI Protected</span>
+                        </div>
+                        <div class="security-badge">
+                            <i class="fas fa-lock"></i>
+                            <span>SSL Secured</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 TouchGuard Store. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Sidebar -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Shopping Cart (<span id="cart-items-count">0</span>)</h3>
+            <button class="cart-close" id="cart-close">&times;</button>
+        </div>
+        <div class="cart-body" id="cart-body">
+            <div class="empty-cart" id="empty-cart">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Your cart is empty</p>
+                <small>Add some products to get started</small>
+            </div>
+            <div class="cart-items" id="cart-items" style="display: none;">
+                <!-- Cart items will be dynamically added here -->
+            </div>
+        </div>
+        <div class="cart-footer" id="cart-footer" style="display: none;">
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span id="cart-subtotal">$0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping:</span>
+                    <span>Free</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total:</span>
+                    <span id="cart-total">$0.00</span>
+                </div>
+            </div>
+            <button class="checkout-btn" id="checkout-btn">
+                <i class="fas fa-credit-card"></i>
+                Proceed to Checkout
+            </button>
+            <div class="secure-checkout">
+                <i class="fas fa-shield-alt"></i>
+                <span>Secure checkout protected by TouchGuard AI</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="checkout-modal" id="checkout-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Secure Checkout</h3>
+                <button class="modal-close" id="checkout-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class="checkout-form" id="checkout-form">
+                    <div class="form-section">
+                        <h4>Shipping Information</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <input type="text" name="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input type="text" name="lastName" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Address</label>
+                            <input type="text" name="address" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>City</label>
+                                <input type="text" name="city" required>
+                            </div>
+                            <div class="form-group">
+                                <label>ZIP Code</label>
+                                <input type="text" name="zip" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h4>Payment Information</h4>
+                        <div class="form-group">
+                            <label>Card Number</label>
+                            <input type="text" name="cardNumber" placeholder="1234 5678 9012 3456" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Expiry Date</label>
+                                <input type="text" name="expiry" placeholder="MM/YY" required>
+                            </div>
+                            <div class="form-group">
+                                <label>CVV</label>
+                                <input type="text" name="cvv" placeholder="123" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Cardholder Name</label>
+                            <input type="text" name="cardName" required>
+                        </div>
+                    </div>
+                    
+                    <div class="checkout-summary">
+                        <h4>Order Summary</h4>
+                        <div id="checkout-items"></div>
+                        <div class="checkout-total">
+                            <span>Total: <strong id="checkout-total">$0.00</strong></span>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="place-order-btn">
+                        <i class="fas fa-lock"></i>
+                        Place Order Securely
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="success-modal" id="success-modal">
+        <div class="modal-content">
+            <div class="success-content">
+                <i class="fas fa-check-circle"></i>
+                <h3>Order Placed Successfully!</h3>
+                <p>Your order <strong id="order-number"></strong> has been placed and will be processed shortly.</p>
+                <p>You will receive a confirmation email with tracking details.</p>
+                <button class="continue-shopping-btn" id="continue-shopping">Continue Shopping</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Scripts -->
+    <script src="/static/js/app.js"></script>
+    <script src="/static/js/mouse-tracker.js"></script>
+    <script>
+        // Complete E-commerce Functionality with Cart and Checkout
+        class TouchGuardEcommerce {
+            constructor() {
+                this.cart = JSON.parse(localStorage.getItem('touchguard_cart')) || [];
+                this.initializeEventListeners();
+                this.updateCartDisplay();
+                console.log('🛒 TouchGuard E-commerce initialized');
+            }
+
+            initializeEventListeners() {
+                // Add to cart buttons
+                document.addEventListener('click', (e) => {
+                    if (e.target.closest('.add-to-cart')) {
+                        e.preventDefault();
+                        const btn = e.target.closest('.add-to-cart');
+                        this.addToCart({
+                            id: btn.dataset.productId,
+                            name: btn.dataset.name,
+                            price: parseFloat(btn.dataset.price)
+                        });
+                    }
+
+                    // Cart toggle
+                    if (e.target.closest('#cart-btn')) {
+                        e.preventDefault();
+                        this.toggleCart();
+                    }
+
+                    // Cart close
+                    if (e.target.closest('#cart-close')) {
+                        e.preventDefault();
+                        this.closeCart();
+                    }
+
+                    // Remove from cart
+                    if (e.target.closest('.remove-item')) {
+                        e.preventDefault();
+                        const productId = e.target.closest('.remove-item').dataset.productId;
+                        this.removeFromCart(productId);
+                    }
+
+                    // Quantity controls
+                    if (e.target.closest('.qty-increase')) {
+                        e.preventDefault();
+                        const productId = e.target.closest('.qty-increase').dataset.productId;
+                        this.updateQuantity(productId, 1);
+                    }
+
+                    if (e.target.closest('.qty-decrease')) {
+                        e.preventDefault();
+                        const productId = e.target.closest('.qty-decrease').dataset.productId;
+                        this.updateQuantity(productId, -1);
+                    }
+
+                    // Checkout
+                    if (e.target.closest('#checkout-btn')) {
+                        e.preventDefault();
+                        this.openCheckout();
+                    }
+
+                    // Checkout modal close
+                    if (e.target.closest('#checkout-close')) {
+                        e.preventDefault();
+                        this.closeCheckout();
+                    }
+
+                    // Continue shopping
+                    if (e.target.closest('#continue-shopping')) {
+                        e.preventDefault();
+                        this.closeSuccessModal();
+                    }
+                });
+
+                // Checkout form submission
+                document.addEventListener('submit', (e) => {
+                    if (e.target.id === 'checkout-form') {
+                        e.preventDefault();
+                        this.processOrder();
+                    }
+                });
+
+                // Close modals on overlay click
+                document.addEventListener('click', (e) => {
+                    if (e.target.id === 'overlay') {
+                        this.closeCart();
+                        this.closeCheckout();
+                        this.closeSuccessModal();
+                    }
+                });
+            }
+
+            addToCart(product) {
+                console.log('🛒 Adding to cart:', product);
+                
+                const existingItem = this.cart.find(item => item.id === product.id);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                    console.log('📈 Updated quantity for', product.name);
+                } else {
+                    this.cart.push({ ...product, quantity: 1 });
+                    console.log('✅ Added new item:', product.name);
+                }
+
+                this.saveCart();
+                this.updateCartDisplay();
+                this.showNotification(`${product.name} added to cart!`, 'success');
+                this.animateCartButton();
+            }
+
+            removeFromCart(productId) {
+                const item = this.cart.find(item => item.id === productId);
+                this.cart = this.cart.filter(item => item.id !== productId);
+                this.saveCart();
+                this.updateCartDisplay();
+                
+                if (item) {
+                    this.showNotification(`${item.name} removed from cart`, 'info');
+                }
+            }
+
+            updateQuantity(productId, change) {
+                const item = this.cart.find(item => item.id === productId);
+                if (!item) return;
+
+                item.quantity += change;
+                
+                if (item.quantity <= 0) {
+                    this.removeFromCart(productId);
+                } else {
+                    this.saveCart();
+                    this.updateCartDisplay();
+                }
+            }
+
+            updateCartDisplay() {
+                const cartCount = document.getElementById('cart-count');
+                const cartItemsCount = document.getElementById('cart-items-count');
+                const emptyCart = document.getElementById('empty-cart');
+                const cartItems = document.getElementById('cart-items');
+                const cartFooter = document.getElementById('cart-footer');
+
+                const totalItems = this.cart.reduce((sum, item) => sum + item.quantity, 0);
+                const totalPrice = this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+                // Update cart count
+                if (cartCount) cartCount.textContent = totalItems;
+                if (cartItemsCount) cartItemsCount.textContent = totalItems;
+
+                if (this.cart.length === 0) {
+                    if (emptyCart) emptyCart.style.display = 'block';
+                    if (cartItems) cartItems.style.display = 'none';
+                    if (cartFooter) cartFooter.style.display = 'none';
+                } else {
+                    if (emptyCart) emptyCart.style.display = 'none';
+                    if (cartItems) cartItems.style.display = 'block';
+                    if (cartFooter) cartFooter.style.display = 'block';
+
+                    // Render cart items
+                    if (cartItems) {
+                        cartItems.innerHTML = this.cart.map(item => `
+                            <div class="cart-item">
+                                <div class="cart-item-info">
+                                    <h4>${item.name}</h4>
+                                    <p class="cart-item-price">$${item.price.toFixed(2)} each</p>
+                                </div>
+                                <div class="cart-item-controls">
+                                    <div class="quantity-controls">
+                                        <button class="qty-btn qty-decrease" data-product-id="${item.id}">-</button>
+                                        <span class="quantity">${item.quantity}</span>
+                                        <button class="qty-btn qty-increase" data-product-id="${item.id}">+</button>
+                                    </div>
+                                    <div class="cart-item-total">$${(item.price * item.quantity).toFixed(2)}</div>
+                                    <button class="remove-item" data-product-id="${item.id}">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('');
+                    }
+
+                    // Update totals
+                    const subtotal = document.getElementById('cart-subtotal');
+                    const total = document.getElementById('cart-total');
+                    
+                    if (subtotal) subtotal.textContent = `$${totalPrice.toFixed(2)}`;
+                    if (total) total.textContent = `$${totalPrice.toFixed(2)}`;
+                }
+            }
+
+            toggleCart() {
+                const cartSidebar = document.getElementById('cart-sidebar');
+                const overlay = document.getElementById('overlay');
+                
+                cartSidebar.classList.toggle('active');
+                overlay.classList.toggle('active');
+                
+                if (cartSidebar.classList.contains('active')) {
+                    document.body.style.overflow = 'hidden';
+                    console.log('🛒 Cart opened');
+                } else {
+                    document.body.style.overflow = '';
+                }
+            }
+
+            closeCart() {
+                const cartSidebar = document.getElementById('cart-sidebar');
+                const overlay = document.getElementById('overlay');
+                
+                cartSidebar.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            openCheckout() {
+                if (this.cart.length === 0) {
+                    this.showNotification('Your cart is empty', 'error');
+                    return;
+                }
+
+                const checkoutModal = document.getElementById('checkout-modal');
+                const overlay = document.getElementById('overlay');
+                const checkoutItems = document.getElementById('checkout-items');
+                const checkoutTotal = document.getElementById('checkout-total');
+
+                // Populate checkout items
+                const totalPrice = this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                
+                checkoutItems.innerHTML = this.cart.map(item => `
+                    <div class="checkout-item">
+                        <span>${item.name} x ${item.quantity}</span>
+                        <span>$${(item.price * item.quantity).toFixed(2)}</span>
+                    </div>
+                `).join('');
+                
+                checkoutTotal.textContent = `$${totalPrice.toFixed(2)}`;
+
+                this.closeCart();
+                checkoutModal.classList.add('active');
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                
+                console.log('💳 Checkout opened');
+            }
+
+            closeCheckout() {
+                const checkoutModal = document.getElementById('checkout-modal');
+                const overlay = document.getElementById('overlay');
+                
+                checkoutModal.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            processOrder() {
+                console.log('🔄 Processing order...');
+                
+                // Simulate order processing
+                const orderNumber = 'TG' + Date.now().toString().slice(-6);
+                
+                this.showNotification('Processing your order...', 'info');
+                
+                setTimeout(() => {
+                    // Clear cart
+                    this.cart = [];
+                    this.saveCart();
+                    this.updateCartDisplay();
+                    
+                    // Show success
+                    this.showOrderSuccess(orderNumber);
+                    
+                    console.log('✅ Order completed:', orderNumber);
+                }, 2000);
+            }
+
+            showOrderSuccess(orderNumber) {
+                const successModal = document.getElementById('success-modal');
+                const orderNumberElement = document.getElementById('order-number');
+                const overlay = document.getElementById('overlay');
+                
+                orderNumberElement.textContent = `#${orderNumber}`;
+                
+                this.closeCheckout();
+                successModal.classList.add('active');
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            closeSuccessModal() {
+                const successModal = document.getElementById('success-modal');
+                const overlay = document.getElementById('overlay');
+                
+                successModal.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            animateCartButton() {
+                const cartBtn = document.getElementById('cart-btn');
+                if (cartBtn) {
+                    cartBtn.style.transform = 'scale(1.1)';
+                    cartBtn.style.background = '#10b981';
+                    setTimeout(() => {
+                        cartBtn.style.transform = 'scale(1)';
+                        cartBtn.style.background = '';
+                    }, 300);
+                }
+            }
+
+            saveCart() {
+                localStorage.setItem('touchguard_cart', JSON.stringify(this.cart));
+            }
+
+            showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.innerHTML = `
+                    <i class="fas fa-${type === 'success' ? 'check' : type === 'error' ? 'times' : 'info'}"></i>
+                    <span>${message}</span>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => notification.classList.add('show'), 100);
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
+            }
+        }
+
+        // Initialize e-commerce functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            window.touchguardEcommerce = new TouchGuardEcommerce();
+        });
+    </script>
+</body>
+</html>
