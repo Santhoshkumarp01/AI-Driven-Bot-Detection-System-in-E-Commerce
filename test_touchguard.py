@@ -14,7 +14,7 @@ def test_improved_touchguard_model():
     print("="*60)
     
     # Load your improved model
-    model_path = "touchguard_improved_bot_detector.pkl"
+    model_path = r"C:\Users\Santhosh kumar P\OneDrive\Desktop\Advanced Bot Detection\touchgaurd\models\touchguard_improved_bot_detector.pkl"
     base_path = r"C:\Users\Santhosh kumar P\OneDrive\Desktop\Advanced Bot Detection\web_bot_detection_dataset"
     
     try:
