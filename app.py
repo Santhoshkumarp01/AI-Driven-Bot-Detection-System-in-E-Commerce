@@ -140,26 +140,33 @@ class DetectionEngine:
         
         try:
             features = [
-                np.mean(velocities) if velocities else 0,
-                np.std(velocities) if len(velocities) > 1 else 0,
-                np.max(velocities) if velocities else 0,
-                np.min(velocities) if velocities else 0,
-                np.median(velocities) if velocities else 0,
-                np.mean(accelerations) if accelerations else 0,
-                np.std(accelerations) if len(accelerations) > 1 else 0,
-                np.mean(direction_changes) if direction_changes else 0,
-                np.std(direction_changes) if len(direction_changes) > 1 else 0,
-                len(movements),
-                sum(distances) if distances else 0,
-                click_count,
-                len(pauses),
-                (max(x_coords) - min(x_coords)) if x_coords else 0,
-                (max(y_coords) - min(y_coords)) if y_coords else 0,
-                len(movements) / (sum(distances) + 1) if distances else 0,
-                np.var(velocities) if len(velocities) > 1 else 0,
-                (sum(distances) / len(movements)) if movements and distances else 0
-            ]
-            
+            # --- Velocity-based Features (from the list of speeds between points) ---
+            np.mean(velocities) if velocities else 0,                      # 1. Average mouse speed
+            np.std(velocities) if len(velocities) > 1 else 0,            # 2. Speed variation (standard deviation)
+            np.max(velocities) if velocities else 0,                     # 3. Maximum speed
+            np.min(velocities) if velocities else 0,                     # 4. Minimum speed
+            np.median(velocities) if velocities else 0,                  # 5. Median speed
+            np.var(velocities) if len(velocities) > 1 else 0,           # 17. Variance of speed (another measure of variation)
+
+            # --- Acceleration-based Features (from the change in speed) ---
+            np.mean(accelerations) if accelerations else 0,              # 6. Average acceleration
+            np.std(accelerations) if len(accelerations) > 1 else 0,      # 7. Acceleration variation (standard deviation)
+
+            # --- Direction-based Features (from the change in angle) ---
+            np.mean(direction_changes) if direction_changes else 0,       # 8. Average change in direction (how curvy the path is)
+            np.std(direction_changes) if len(direction_changes) > 1 else 0, # 9. Direction change variation (standard deviation)
+
+            # --- Overall Movement Features ---
+            len(movements),                                               # 10. Total number of recorded mouse coordinates
+            sum(distances) if distances else 0,                           # 11. Total distance traveled by the cursor
+            click_count,                                                  # 12. Total number of clicks
+            len(pauses),                                                  # 13. Number of pauses (moments of very low speed)
+            (max(x_coords) - min(x_coords)) if x_coords else 0,          # 14. The horizontal distance covered (width of movement)
+            (max(y_coords) - min(y_coords)) if y_coords else 0,          # 15. The vertical distance covered (height of movement)
+            len(movements) / (sum(distances) + 1) if distances else 0,   # 16. Movement efficiency (ratio of points to distance)
+            (sum(distances) / len(movements)) if movements and distances else 0 # 18. Average step size between points
+        ]
+                    
             features = [float(f) if not np.isnan(f) and not np.isinf(f) else 0.0 for f in features]
             
             # Log feature extraction for debugging
